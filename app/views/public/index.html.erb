@@ -1,3 +1,44 @@
-<p>Whose names can you remember?</p>
-<em>TODO: Connect button goes here</em>
-<em>TODO: Fancy screenshot thingy goes here</em>
+<h1>How many names can you remember?</h1>
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({appId: '<%= Settings.fb_app_id %>', status: true, cookie: true,
+             xfbml: true});
+    initApp();
+  };
+  (function() {
+    var e = document.createElement('script'); e.async = true;
+    e.src = document.location.protocol +
+      '//connect.facebook.net/en_US/all.js';
+    document.getElementById('fb-root').appendChild(e);
+  }());
+</script>
+<div id="fb-login" style="display: none;">
+<fb:login-button show-faces="true" width="200" max-rows="1" perms="friends_photo_video_tags">Login with Facebook</fb:login-button>
+<em>No data will be stored (in fact, no data even goes to the server)</em>
+</div>
+<div id="namethat-loading" style="display: none">
+  <%= image_tag "loading.gif", :id => "loading-image" %>
+</div>
+<div id="namethat-app" style="display: none">
+  <div class="app-instructions">
+    <p>Just type the first name (last name if you're feeling daring) of the person you see in the photo.</p>
+    <p class="tips"><em>Random tip: Type ! to get a new photo (up to 20), > to skip the question, # to highlight the tag.</em></p>
+  </div>
+  <div class="app-score">
+    <strong>Your score: </strong><span id="score"></span>
+  </div>
+  <div class="app-input">
+    <input id="answer" name="answer" autocomplete="off" type="text" />
+    <input id="check" value="Check" type="button" />
+  </div>
+  <div class="app-links">
+    <a href="#" id="skip-question">Skip Question</a> | 
+    <a href="#" id="next-photo">Give me another photo</a>
+  </div>
+  <div class="app-status">
+    <span id="status" style="opacity: 0">A</span>
+  </div>
+  <img id="friend-photo" />
+  <%= image_tag "circle.png", :id => "circle-image" %>
+</div>

@@ -73,3 +73,51 @@ body {
     margin-right: 10px;
   }
 }
+
+/* App */
+
+#namethat-app {
+  .tips {
+    font-size: 0.8em;
+  }
+
+  .app-input, .app-links, .app-status {
+    margin: 10px 0;
+  }
+
+  .app-links {
+    a:visited {
+      color: #0000FF;
+    }
+  }
+
+  #friend-photo {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .app-status {
+    #status {
+      @include borderRadius(5px);
+      padding: 5px;
+    }
+
+    .correct {
+      background-color: #8E8;
+    }
+
+    .wrong {
+      background-color: #E99;
+    }
+
+    .info {
+      background-color: #ED5;
+    }
+  }
+
+  #circle-image {
+    display: none;
+    position: absolute;
+    width: 100px;
+  }
+}

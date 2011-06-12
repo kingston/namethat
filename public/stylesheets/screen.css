@@ -597,3 +597,47 @@ body {
   text-decoration: none;
   margin-right: 10px;
 }
+
+/* App */
+/* line 80, ../../app/stylesheets/screen.scss */
+#namethat-app .tips {
+  font-size: 0.8em;
+}
+/* line 84, ../../app/stylesheets/screen.scss */
+#namethat-app .app-input, #namethat-app .app-links, #namethat-app .app-status {
+  margin: 10px 0;
+}
+/* line 89, ../../app/stylesheets/screen.scss */
+#namethat-app .app-links a:visited {
+  color: #0000FF;
+}
+/* line 94, ../../app/stylesheets/screen.scss */
+#namethat-app #friend-photo {
+  display: block;
+  margin: 0 auto;
+}
+/* line 100, ../../app/stylesheets/screen.scss */
+#namethat-app .app-status #status {
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  padding: 5px;
+}
+/* line 105, ../../app/stylesheets/screen.scss */
+#namethat-app .app-status .correct {
+  background-color: #8E8;
+}
+/* line 109, ../../app/stylesheets/screen.scss */
+#namethat-app .app-status .wrong {
+  background-color: #E99;
+}
+/* line 113, ../../app/stylesheets/screen.scss */
+#namethat-app .app-status .info {
+  background-color: #ED5;
+}
+/* line 118, ../../app/stylesheets/screen.scss */
+#namethat-app #circle-image {
+  display: none;
+  position: absolute;
+  width: 100px;
+}
