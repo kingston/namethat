@@ -11,6 +11,9 @@ function initApp() {
     }
     else {
       $("#fb-login").show();
+      FB.Event.subscribe('auth.login', function(response) {
+        logged_in(response.session);
+      });
     }
   });
   $("#check").click(function() {
@@ -36,6 +39,7 @@ function initApp() {
 }
 
 function logged_in(session) {
+  $("#fb-login").hide();
   init_challenge(session);
 }
 
