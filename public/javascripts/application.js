@@ -107,7 +107,7 @@ function showNextPhoto() {
   if (curFriend.photos === undefined) {
     FB.api({
       method: "fql.query",
-      query: "SELECT pid, src_big FROM photo WHERE pid IN (SELECT pid FROM photo_tag WHERE subject=" + curFriend.uid + ") LIMIT 20" },
+      query: "SELECT pid, src_big FROM photo WHERE pid IN (SELECT pid FROM photo_tag WHERE subject=" + curFriend.uid + " LIMIT 50) LIMIT 20" },
       function(response) {
         curFriend.photos = response;
         photosLoaded(response);
