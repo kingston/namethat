@@ -1,0 +1,75 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "normalize";
+@import "boilerplate";
+
+/* General Styles */
+
+h1 {
+  font-size: 1.4em;
+  color: #FA0;
+}
+
+/* Layout Styles */
+
+body {
+  background-color: #EEF;
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+#header-background {
+  margin: 0;
+  top: 0;
+  left: 0;
+  z-index: -999;
+  position: absolute;
+  width: 100%;
+  min-width: 1000px;
+  height: 500px;
+  @include gradientV(#DDF, #EEF);
+}
+
+#wrapper {
+  width: 640px;
+  margin: 0 auto;
+}
+
+#header {
+  padding-top: 10px;
+  .title {
+    font-size: 2em;
+    color: #FFAA00;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  div.nav {
+    float:right;
+    margin-right: 20px;
+    font-size: 1.2em;
+
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
+#body {
+  margin: 10px 0;
+  background-color: #FFF;
+  padding: 10px;
+  @include borderRadius(10px);
+}
+
+#footer {
+  margin: 10px 0;
+  font-size: 0.8em;
+
+  a {
+    text-decoration: none;
+    margin-right: 10px;
+  }
+}

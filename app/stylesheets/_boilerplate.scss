@@ -1,0 +1,251 @@
+// ============================================================= //
+// =               Boilerplate Sass CSS Styles                 = //
+// =    by Michael P. Geraci, 2011 - www.michaelgeraci.com     = //
+// =    tell me what's missing: mgeraci@gmail.com | @mgeraci   = //
+// =       free for all to use and modify (MIT License)        = //
+// = thanks to nathos for the original less => sass conversion = //
+// ============================================================= //
+
+// ==================
+// = General Styles =
+// ==================
+
+// No margin or padding on docroot
+html {
+  margin: 0;
+  padding: 0; }
+
+// No margin or padding on body, sensible font defaults
+body {
+  margin: 0;
+  padding: 0;
+  font-family: helvetica, arial, verdana, sans-serif;
+  text-rendering: optimizeLegibility; }
+
+// Stack your boxes easily with this
+@mixin floatClear {
+  float: left;
+  clear: both; }
+
+// Do you hate borders on your images and image links? Because I do.
+img {
+  border: 0; }
+
+// clearfix
+@mixin clearfix {
+  zoom: 1;
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; } }
+
+// ================
+// = CSS3 Helpers =
+// ================
+
+// Rounded Corners
+@mixin borderRadius($radius) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius; }
+
+// Top-to-Bottom Gradient
+@mixin gradientV($start, $end) {
+  background: ($start + $end) / 2;
+  background-image: -moz-linear-gradient(top, $start, $end);
+  background-image: -webkit-gradient(linear, left top, left bottom, from($start), to($end));
+  background-image: -webkit-linear-gradient(top, $start, $end);
+  background-image: -o-linear-gradient(top, $start, $end);
+  background-image: linear-gradient(top, $start, $end);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}');
+  -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}');
+  background-image: -ms-linear-gradient(top, $start, $end); }
+
+// Left-to-Right Gradient
+@mixin gradientH($start, $end) {
+  background: ($start + $end) / 2;
+  background-image: -moz-linear-gradient(left, $start, $end);
+  background-image: -webkit-gradient(linear, left center, right center, from($start), to($end));
+  background-image: -webkit-linear-gradient(left center, right center, from($start), to($end));
+  background-image: -o-linear-gradient(left, $start, $end);
+  background-image: linear-gradient(left, $start, $end);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
+  -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}', GradientType=1);
+  background-image: -ms-linear-gradient(left, $start, $end); }
+
+// Top-to-Bottom 3 Stop Gradient
+@mixin gradientV3($start, $middle, $middlePos, $end) {
+  background: ($start + $end) / 2;
+  background-image: -moz-linear-gradient(top, $start, $middle $middlePos * 1%, $end);
+  background-image: -webkit-gradient(linear, left top, left bottom, from($start), color-stop($middlePos / 100, $middle), to($end));
+  background-image: -webkit-linear-gradient(top, from($start), color-stop($middlePos / 100, $middle), to($end));
+  background-image: -o-linear-gradient(top, $start 0%, $middle $middlePos * 1%, $end 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}' endColorstr='#{$end}');
+  -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}');
+  background-image: linear-gradient(top, $start 0%, $middle $middlePos * 1%, $end 100%); }
+
+// Left-to-Right 3 Stop Gradient
+@mixin gradientH3($start, $middle, $middlePos, $end) {
+  background: ($start + $end) / 2;
+  background-image: -moz-linear-gradient(left, $start, $middle $middlePos * 1%, $end);
+  background-image: -webkit-gradient(linear, left center, right center, from($start), color-stop($middlePos / 100, $middle), to($end));
+  background-image: -webkit-linear-gradient(left, from($start), color-stop($middlePos / 100, $middle), to($end));
+  background-image: -o-linear-gradient(left, $start 0%, $middle $middlePos * 1%, $end 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}');
+  -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start}', endColorstr='#{$end}');
+  background-image: linear-gradient(left, $start 0%, $middle $middlePos * 1%, $end 100%); }
+
+// Top-to-Bottom 4 Stop Gradient
+@mixin gradientV4($color1, $color2, $position2, $color3, $position3, $color4) {
+  background: ($color1 + $color4) / 2;
+  background-image: -moz-linear-gradient(top, $color1, $color2 $position2 * 1%, $color3 $position3 * 1%, $color4);
+  background-image: -webkit-gradient(linear, left top, left bottom, from($color1), color-stop($position2 / 100, $color2), color-stop($position3 / 100, $color3), to($color4));
+  background-image: -webkit-linear-gradient(top, from($color1), color-stop($position2 / 100, $color2), color-stop($position3 / 100, $color3), to($color4));
+  background-image: -o-linear-gradient(top, $color1 0%, $color2 $position2 * 1%, $color3 $position3 * 1%, $color4 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$color1}', endColorstr='#{$color4}');
+  -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$color1}', endColorstr='#{$color4}');
+  background-image: linear-gradient(top, $color1 0%, $color2 $position2 * 1%, $color3 $position3 * 1%, $color4 100%); }
+
+// Left-to-Right 4 Stop Gradient
+@mixin gradientH4($color1, $color2, $position2, $color3, $position3, $color4) {
+  background: ($color1 + $color4) / 2;
+  background-image: -moz-linear-gradient(left, $color1, $color2 $position2 * 1%, $color3 $position3 * 1%, $color4);
+  background-image: -webkit-gradient(linear, left center, right center, from($color1), color-stop($position2 / 100, $color2), color-stop($position3 / 100, $color3), to($color4));
+  background-image: -webkit-linear-gradient(left center, right center, from($color1), color-stop($position2 / 100, $color2), color-stop($position3 / 100, $color3), to($color4));
+  background-image: -o-linear-gradient(left, $color1 0%, $color2 $position2 * 1%, $color3 $position3 * 1%, $color4 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$color1}', endColorstr='#{$color4}');
+  -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$color1}', endColorstr='#{$color4}');
+  background-image: linear-gradient(left, $color1 0%, $color2 $position2 * 1%, $color3 $position3 * 1%, $color4 100%); }
+
+// Drop shadow
+@mixin boxShadow($xOffset, $yOffset, $blur, $color, $inset: "default") {
+  @if $inset == "default" {
+    -moz-box-shadow: $xOffset $yOffset $blur $color;
+    -webkit-box-shadow: $xOffset $yOffset $blur $color;
+    box-shadow: $xOffset $yOffset $blur $color; }
+  @else {
+    -moz-box-shadow: $xOffset $yOffset $blur $color $inset;
+    -webkit-box-shadow: $xOffset $yOffset $blur $color $inset;
+    box-shadow: $xOffset $yOffset $blur $color $inset; } }
+
+// Transition
+@mixin transition($property, $time, $easing: "default") {
+  @if $easing == "default" {
+    -moz-transition: $property $time;
+    -o-transition: $property $time;
+    -webkit-transition: $property $time;
+    -ms-transition: $property $time;
+    transition: $property $time; }
+  @else {
+    -moz-transition: $property $time $easing;
+    -o-transition: $property $time $easing;
+    -webkit-transition: $property $time $easing;
+    -ms-transition: $property $time $easing;
+    transition: $property $time $easing; } }
+
+// ===========================
+// = Centered Content Blocks =
+// ===========================
+
+// For designs that involve a centered column of fixed with, I've found that
+// for great browser compatability, it's useful to separate page elements
+// into discreet horizontal chunks when possible. These two classes help.
+//
+// example:
+// <div class="wrapOut">
+//   <div class="wrapIn">
+//     header content here
+//   </div>
+// </div>
+// <div class="wrapOut">
+//   <div class="wrapIn">
+//     your main content goes here
+//   </div>
+// </div>
+
+// set the width of your body column
+$contentWidth: 960px;
+
+html {
+  width: 100%;
+  height: 100%;
+  min-width: $contentWidth; }
+
+body {
+  position: relative; }
+
+.wrapOut {
+  width: 100%;
+  @include floatClear;
+  min-width: $contentWidth; }
+
+.wrapIn {
+  width: $contentWidth;
+  margin: 0 auto; }
+
+// ======================================================
+// = Horizontal Centering for Objects of Variable Width =
+// ======================================================
+
+// example:
+//<div class="outer">
+//  <div class="inner">The amount of text in this div can change, and it would still be centered</div>
+//</div>
+
+// It's worth noting that since .outer is positioned in the middle, it could protrude relatively
+// far off to the right depending on the width of the object being centered. I usually set
+// .outer's parent to overflow: hidden to make sure this doesn't affect the layout.
+
+.outer {
+  @include floatClear;
+  position: relative;
+  left: 50%; }
+
+.inner {
+  position: relative;
+  left: -50%; }
+
+// ========================= //
+// = Call To Action Button = //
+// ========================= //
+
+// Shiny buttons make people want to click them! Just add the class callToAction to any link!
+// Or mix it in with the color as a parameter!
+
+@mixin callToAction($buttonColor: #c97200) {
+  // slave colors
+  $defaultStart: lighten($buttonColor, 10%);
+  $defaultEnd: $buttonColor;
+  $borderColor: darken($buttonColor, 20%);
+  // button positioning
+  @include floatClear;
+  margin: 10px 0 0 0;
+  padding: 4px 13px 2px 13px;
+  // text styles
+  font-size: 30px;
+  color: white;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: rgba(0, 0, 0, 0.2) -1px 0, rgba(0, 0, 0, 0.2) 0 -1px, rgba(255, 255, 255, 0.2) 0 1px;
+  // box styles
+  border: 1px solid $borderColor;
+  @include borderRadius(6px);
+  @include boxShadow(0px, 0px, 2px, $borderColor);
+  @include gradientV4($defaultStart, $defaultStart, 46, $defaultEnd, 54, $defaultEnd);
+  // hover state
+  &:hover {
+    color: white;
+    // gradient colors
+    $start: darken($defaultStart, 10%);
+    $end: darken($defaultEnd, 10%);
+    @include gradientV4($start, $start, 46, $end, 54, $end); }
+  // active (click) state
+  &:active {
+    color: white;
+    // gradient colors
+    $start: darken($defaultStart, 20%);
+    $end: darken($defaultEnd, 20%);
+    @include gradientV4($start, $start, 46, $end, 54, $end); } }

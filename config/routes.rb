@@ -1,11 +1,9 @@
 Namethat::Application.routes.draw do
-  get "public/index"
+  # Public routes
 
-  get "public/about"
-
-  get "public/privacy"
-
-  get "public/terms"
+  match "/about" => "public#about", :as => :about
+  match "/privacy" => "public#privacy", :as => :privacy
+  match "/terms" => "public#terms", :as => :terms
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

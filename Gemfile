@@ -9,6 +9,7 @@ gem 'sqlite3'
 
 # Miscellaneous
 
+gem 'compass', '~> 0.11.2'
 gem 'jquery-rails', '>= 1.0.3'
 gem 'rails_config', '~>0.2.3'
 
