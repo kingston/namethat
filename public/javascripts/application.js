@@ -13,11 +13,6 @@ function initApp() {
       $("#fb-login").show();
     }
   });
-  $("#logout-link").click(function() {
-    FB.logout();
-    location.reload(true);
-    return false;
-  });
   $("#check").click(function() {
     checkAnswer();
   });
