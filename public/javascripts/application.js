@@ -107,7 +107,7 @@ function showNextPhoto() {
   if (curFriend.photos === undefined) {
     FB.api({
       method: "fql.query",
-      query: "SELECT pid, src_big FROM photo WHERE pid IN (SELECT pid FROM photo_tag WHERE subject=" + curFriend.uid + " LIMIT 50) LIMIT 20" },
+      query: "SELECT pid, src_big FROM photo WHERE pid IN (SELECT pid FROM photo_tag WHERE subject='" + curFriend.uid + "' LIMIT 50) LIMIT 20" },
       function(response) {
         curFriend.photos = response;
         photosLoaded(response);
@@ -168,7 +168,7 @@ function highlightPhoto() {
   }
   FB.api({
     method: "fql.query",
-    query: "SELECT xcoord, ycoord FROM photo_tag WHERE pid = " +curFriend.photos[curFriend.curPhotoIdx].pid + " AND subject = " + curFriend.uid + " LIMIT 1" },
+    query: "SELECT xcoord, ycoord FROM photo_tag WHERE pid = '" +curFriend.photos[curFriend.curPhotoIdx].pid + "' AND subject = '" + curFriend.uid + "' LIMIT 1" },
     function(response) {
       if (response.length == 0) {
         showStatus("No tags available - sorry", "info", true);
