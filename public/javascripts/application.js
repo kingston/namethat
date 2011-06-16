@@ -58,7 +58,7 @@ function initChallenge(session) {
 
   FB.api({
     method: "fql.query",
-    query: "SELECT uid, name, pic_big FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me() LIMIT 10)"
+    query: "SELECT uid, name, pic_big FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me() LIMIT 1000)"
   },
   function(response) {
     if (response.length == 0) {
