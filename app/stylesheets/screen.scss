@@ -6,17 +6,27 @@
 @import "normalize";
 @import "boilerplate";
 
+/* Color variables */
+
+$background-one: #C3E4F5;
+$background-two: #7ACCF5;
+$header-color: #3B6275;
+
 /* General Styles */
 
 h1 {
   font-size: 1.4em;
-  color: #FA0;
+  color: $header-color;
+}
+
+a, a:visited {
+  color: #3B6275;
 }
 
 /* Layout Styles */
 
 body {
-  background-color: #EEF;
+  background-color: $background-two;
   font-family: Verdana, Geneva, sans-serif;
 }
 
@@ -29,7 +39,7 @@ body {
   width: 100%;
   min-width: 1000px;
   height: 500px;
-  @include gradientV(#DDF, #EEF);
+  @include gradientV($background-one, $background-two);
 }
 
 #wrapper {
@@ -41,7 +51,7 @@ body {
   padding-top: 10px;
   .title {
     font-size: 2em;
-    color: #FFAA00;
+    color: $header-color;
     font-weight: bold;
     text-decoration: none;
   }
@@ -61,7 +71,7 @@ body {
   margin: 10px 0;
   background-color: #FFF;
   padding: 10px;
-  @include borderRadius(10px);
+  @include borderRadius(5px);
 }
 
 #footer {
@@ -77,8 +87,15 @@ body {
 /* App */
 
 #namethat-app {
-  .tips {
-    font-size: 0.8em;
+  .tips-box {
+    padding: 1px 5px;
+    margin: 3px 0;
+    @include borderRadius(5px);
+    background-color: #D4E4F5;
+    p {
+      color: #333;
+      font-size: 0.8em;
+    }
   }
 
   .app-input, .app-links, .app-status {
@@ -86,8 +103,14 @@ body {
   }
 
   .app-links {
-    a:visited {
-      color: #0000FF;
+    color: #3B6275;
+
+    a {
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
   }
 
