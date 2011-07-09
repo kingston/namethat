@@ -3,12 +3,18 @@
   <p>Hi there, we're loading the Facebook interface now.  Please give us a sec while it loads.</p>
   <p><em>(If nothing happens, try reloading or just come back another time - the site might be down)</em></p>
 </div>
+<div id="error-pane" style="display: none">
+  <p>Sorry, we encountered a bug loading your data.  Please try again and if that doesn't work, try again another time. :(</p>
+</div>
 <div id="fb-root"></div>
-<script>
+<script type="text/javascript">
   window.fbAsyncInit = function() {
-    FB.init({appId: '<%= Settings.fb_app_id %>', status: true, cookie: true,
-             xfbml: true});
-    initApp();
+    FB.init({
+      appId: '<%= Settings.fb_app_id %>',
+      status: true,
+      xfbml: true
+    });
+    nameThat.initialize();
   };
   (function() {
     var e = document.createElement('script'); e.async = true;
@@ -51,8 +57,8 @@
   <div class="app-status">
     <span id="status" style="opacity: 0">A</span>
   </div>
-  <img id="friend-photo" />
-  <%= image_tag "circle.png", :id => "circle-image" %>
+  <img id="friend-photo" alt="Your Friend's Photo" />
+  <%= image_tag "circle.png", :alt => "Tag", :id => "circle-image" %>
   <br />
   <fb:like href="http://namethat.ktam.org/" send="true" width="450" show_faces="true" font="verdana"></fb:like>
 </div>
