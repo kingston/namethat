@@ -12,23 +12,24 @@
     FB.init({
       appId: '<%= Settings.fb_app_id %>',
       status: true,
+      cookie: false,
       xfbml: true
     });
     nameThat.initialize();
   };
   (function() {
     var e = document.createElement('script'); e.async = true;
-    e.src = document.location.protocol +
-      '//connect.facebook.net/en_US/all.js';
+    e.src = "https://connect.facebook.net/en_US/all.js";
     document.getElementById('fb-root').appendChild(e);
   }());
 </script>
 <div id="fb-login" style="display: none;">
-<p>Hi there!  This is just a quick side project I made to play around with the Facebook API and test my knowledge of the names of my Facebook friends :P.</p>
-<p>
-<em>None of your Facebook data will be stored (in fact, no data even goes to the server)</em>
-</p>
+<p><em>Dedicated to people who just can't remember names</em></p>
+<p>Hi there!  This is just a quick side project I made to test how many of my Facebook friends' names I can remember (and hopefully improve a bit ;p).</p>
 <fb:login-button show-faces="true" width="200" max-rows="1" perms="friends_photo_video_tags">Login with Facebook</fb:login-button>
+<p class="notes">
+<em>* I don't store any of your Facebook data (none of that data goes to the server)</em>
+</p>
 </div>
 <div id="namethat-loading" style="display: none">
   <%= image_tag "loading.gif", :id => "loading-image" %>
@@ -55,7 +56,7 @@
     <a href="#" id="skip-question">Skip Question</a>
   </div>
   <div class="app-status">
-    <span id="status" style="opacity: 0">A</span>
+    <span id="status" style="opacity: 0"></span>
   </div>
   <img id="friend-photo" alt="Your Friend's Photo" />
   <%= image_tag "circle.png", :alt => "Tag", :id => "circle-image" %>

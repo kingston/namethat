@@ -5,9 +5,9 @@
 
 var nameThat = {
   settings: {
-    maxFriends: 10,
-    maxPhotos: 50,
-    conections: true
+    maxFriends: 1000, // Maximum friends to load
+    maxPhotos: 25, // Maximum number of photos to load per person
+    conections: true // Use the connections table?
   },
 
   cachedFriends: null,
@@ -19,8 +19,6 @@ var nameThat = {
   * @remarks Requires the FB object to have been initialized first.
   **/
   initialize: function() {
-    // Log Facebook events
-    FB.Event.subscribe('fb.log', nameThat._fbLogHandler);
     // Check if user is already logged in
     FB.getLoginStatus(function(response) {
       $("#fb-loading").hide();
@@ -39,13 +37,9 @@ var nameThat = {
     $("#next-photo").click(nameThat.showNextPhoto);
     $("#check").click(nameThat.checkAnswer);
     $("#answer").keypress(nameThat._textEnterHandler);
+    $("body").keypress(nameThat._textEnterHandler);
     $("#skip-question").click(nameThat.skipQuestion);
     $("#tag-photo").click(nameThat.highlightPhoto);
-  },
-
-  _fbLogHandler: function(response) {
-    var foo = response;
-    
   },
 
   /**
@@ -163,9 +157,10 @@ var nameThat = {
       $("#friend-photo").attr("src", curFriend.photos[curFriend.curPhotoIdx].src_big);
     };
     if (curFriend.photos === undefined) {
+      var maxPhotos = nameThat.settings.maxPhotos;
       FB.api({
         method: "fql.query",
-        query: "SELECT pid, src_big FROM photo WHERE pid IN (SELECT pid FROM photo_tag WHERE subject='" + curFriend.uid + "' LIMIT 50) LIMIT 20" },
+        query: "SELECT pid, src_big FROM photo WHERE pid IN (SELECT pid FROM photo_tag WHERE subject='" + curFriend.uid + "' ORDER BY created DESC LIMIT " + (maxPhotos * 2) + ") LIMIT " + maxPhotos },
         function(response) {
           curFriend.photos = response;
           photosLoaded(response);

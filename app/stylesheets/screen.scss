@@ -49,15 +49,18 @@ body {
 
 #header {
   padding-top: 10px;
+  overflow: hidden;
+  _height: 1%; /* IE hackery */
   .title {
     font-size: 2em;
     color: $header-color;
     font-weight: bold;
     text-decoration: none;
+    float: left;
   }
 
   div.nav {
-    float:right;
+    float: right;
     margin-right: 20px;
     font-size: 1.2em;
 
@@ -85,6 +88,10 @@ body {
 }
 
 /* App */
+
+.notes {
+  font-size: small;
+}
 
 #namethat-app {
   .tips-box {
