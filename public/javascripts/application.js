@@ -1,7 +1,5 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
+// NameThat application in a single JS file using Facebook APIs
 
-// NameThat application in a box using Facebook APIs
 
 function initApp() {
   //Check if already logged in

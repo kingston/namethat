@@ -6,6 +6,7 @@ class PublicController < ApplicationController
   end
 
   def privacy
+
   end
 
   def terms
