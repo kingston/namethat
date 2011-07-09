@@ -68,9 +68,9 @@ var nameThat = {
         return;
       }
       nameThat.cachedFriends = response;
-      nameThat.startChallenge();
       $("#namethat-loading").hide();
       $("#namethat-app").show();
+      nameThat.startChallenge();
     });
   },
 
