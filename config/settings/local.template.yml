@@ -1,4 +1,4 @@
-# Version: 2
+# Version: 3
 # Contains local settings that must be modified for each machine
 
 # IMPORTANT: You need to copy the contents of this file to local.yml and customize accordingly
@@ -11,4 +11,7 @@ secret_token: ~
 
 fb_app_id: ~
 fb_id_secret: ~
+
+# Google Analytics
+ga_account: ~ 
 
