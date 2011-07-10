@@ -36,7 +36,6 @@ var nameThat = {
     // Attach event handlers
     $("#next-photo").click(nameThat.showNextPhoto);
     $("#check").click(nameThat.checkAnswer);
-    $("#answer").keypress(nameThat._textEnterHandler);
     $("body").keypress(nameThat._textEnterHandler);
     $("#skip-question").click(nameThat.skipQuestion);
     $("#tag-photo").click(nameThat.highlightPhoto);
