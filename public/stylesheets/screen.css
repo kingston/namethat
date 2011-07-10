@@ -648,27 +648,30 @@ body {
 #namethat-app #friend-photo {
   display: block;
   margin: 0 auto;
+  max-width: 500px;
+  /* Resize the image for IE6 */
+  width: expression(this.width > 500 ? 500: true);
 }
-/* line 130, ../../app/stylesheets/screen.scss */
+/* line 133, ../../app/stylesheets/screen.scss */
 #namethat-app .app-status #status {
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   padding: 5px;
 }
-/* line 135, ../../app/stylesheets/screen.scss */
+/* line 138, ../../app/stylesheets/screen.scss */
 #namethat-app .app-status .correct {
   background-color: #8E8;
 }
-/* line 139, ../../app/stylesheets/screen.scss */
+/* line 142, ../../app/stylesheets/screen.scss */
 #namethat-app .app-status .wrong {
   background-color: #E99;
 }
-/* line 143, ../../app/stylesheets/screen.scss */
+/* line 146, ../../app/stylesheets/screen.scss */
 #namethat-app .app-status .info {
   background-color: #ED5;
 }
-/* line 148, ../../app/stylesheets/screen.scss */
+/* line 151, ../../app/stylesheets/screen.scss */
 #namethat-app #circle-image {
   display: none;
   position: absolute;

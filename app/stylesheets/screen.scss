@@ -124,6 +124,9 @@ body {
   #friend-photo {
     display: block;
     margin: 0 auto;
+    max-width: 500px;
+    /* Resize the image for IE6 */
+    width: expression(this.width > 500 ? 500: true);
   }
 
   .app-status {
