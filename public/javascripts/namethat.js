@@ -89,15 +89,15 @@ var nameThat = {
     code = (e.keyCode ? e.keyCode : e.which);
     var preventDefault = true;
     switch (code) {
-      case 33: // ! 
+      case 49: // 1 
         nameThat.showNextPhoto();
         e.preventDefault();
         break;
-      case 35: // #
+      case 50: // 2
         nameThat.highlightPhoto();
         e.preventDefault();
         break;
-      case 62: // >
+      case 51: // 3
         nameThat.skipQuestion();
         e.preventDefault();
         break;
