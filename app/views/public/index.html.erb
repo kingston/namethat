@@ -61,5 +61,32 @@
   <img id="friend-photo" alt="Your Friend's Photo" />
   <%= image_tag "circle.png", :alt => "Tag", :id => "circle-image" %>
   <br />
+  <script text="text/javascript">
+    $(function() {
+      var movein = function() {
+        //Paranoids galore :P
+        var a = "web";
+        var b = "kingston";
+        var c = "mat";
+        var d = "@";
+        var e = "mail";
+        var f = e;
+        f += b.substr(5, 2) + String.fromCharCode(58) + a + d + b + c.split("").reverse().join("") + ".com";
+        $("#feedback-link").attr('href', f);
+      };
+      var bomb = function() {
+        if ($("feedback-link").attr("href") == "#") {
+          $("#feedback-link").attr('href', "http://xkcd.com");
+        }
+        return false;
+      };
+      $("#feedback-link").mouseover(movein);
+      $("#feedback-link").mouseout(bomb);
+      $("#feedback-link").click(movein);
+    });
+  </script>
+  <p class="notes">
+  <a id="feedback-link" href="#">Feedback welcome</a>
+  </p>
   <fb:like href="http://namethat.ktam.org/" send="true" width="450" show_faces="true" font="verdana"></fb:like>
 </div>
