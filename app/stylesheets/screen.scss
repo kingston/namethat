@@ -104,21 +104,13 @@ body {
       font-size: 0.8em;
     }
   }
-
-  .app-input, .app-links, .app-status {
-    margin: 10px 0;
+  
+  #answer {
+    width: 250px;
   }
 
-  .app-links {
-    color: #3B6275;
-
-    a {
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
+  .app-links, .app-input, .app-status {
+    margin: 10px 0;
   }
 
   #friend-photo {
@@ -127,6 +119,11 @@ body {
     max-width: 500px;
     /* Resize the image for IE6 */
     width: expression(this.width > 500 ? 500: true);
+  }
+
+  .action-button .ui-icon {
+    display: inline-block;
+    margin-right: 5px;
   }
 
   .app-status {
@@ -154,3 +151,14 @@ body {
     width: 100px;
   }
 }
+
+.tooltip {
+    display:none;
+    background:transparent url(/images/black_arrow.png);
+    font-size:12px;
+    height:70px;
+    width:160px;
+    padding:25px;
+    color:#fff; 
+}
+

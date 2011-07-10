@@ -36,24 +36,19 @@
 </div>
 <div id="namethat-app" style="display: none">
   <div class="app-instructions">
-    <p>Just type the first name (last name if you're feeling daring) of the person you see in the photo.</p>
-    <div class="tips-box">
-      <p><strong>Picture sucks?</strong> Click the "Give me another photo of them" or type !.</p>
-      <p><strong>Don't know which person?</strong> Click "Show Tag in Photo" or type #.</p>
-      <p><strong>Still doesn't work?</strong> Click "Skip Question" (you won't be penalized) or type &gt;.</p>
-    </div>
+    <p>Just type the first name (or full name) of the person in the photo.</p>
   </div>
   <div class="app-score">
     <strong>Your score: </strong><span id="score"></span>
   </div>
+  <div class="app-links">
+    <button class="action-button" title="Shows another photo of that person (Shortcut: !)" id="next-photo">Show Another Photo</button>
+    <button class="action-button" title="Highlights the part of the photo where the person was tagged (Shortut: #)" id="tag-photo">Highlight Tag</button>
+    <button class="action-button" title="Skips the current question without affecting your score (Shortcut: >)" id="skip-question">Skip Question</button>
+  </div>
   <div class="app-input">
     <input id="answer" name="answer" autocomplete="off" type="text" />
-    <input id="check" value="Check" type="button" />
-  </div>
-  <div class="app-links">
-    <a href="#" id="next-photo">Give me another photo of them</a> |
-    <a href="#" id="tag-photo">Show Tag in Photo</a> |
-    <a href="#" id="skip-question">Skip Question</a>
+    <button class="action-button" title="Checks your answer (Shortcut: Enter)"  id="check-answer">Check Answer</button>
   </div>
   <div class="app-status">
     <span id="status" style="opacity: 0"></span>

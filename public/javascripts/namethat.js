@@ -35,10 +35,19 @@ var nameThat = {
     
     // Attach event handlers
     $("#next-photo").click(nameThat.showNextPhoto);
-    $("#check").click(nameThat.checkAnswer);
+    $("#check-answer").click(nameThat.checkAnswer);
     $("body").keypress(nameThat._textEnterHandler);
     $("#skip-question").click(nameThat.skipQuestion);
     $("#tag-photo").click(nameThat.highlightPhoto);
+
+    // Make things pretty
+    $("#check-answer").button({ icons: { primary: "ui-icon-check" } });
+    $("#next-photo").button({ icons: { primary: "ui-icon-arrowreturnthick-1-s" } });
+    $("#tag-photo").button({ icons: { primary: "ui-icon-tag" } });
+    $("#skip-question").button( { icons: { primary: "ui-icon-seek-next" } });
+
+    // Tooltips
+    $(".action-button").tooltip();
   },
 
   /**
