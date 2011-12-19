@@ -7,7 +7,7 @@ var nameThat = {
   settings: {
     maxFriends: 1000, // Maximum friends to load
     maxPhotos: 25, // Maximum number of photos to load per person
-    conections: true // Use the connections table?
+    connections: false // Use the connections table?
   },
 
   cachedFriends: null,
@@ -60,16 +60,16 @@ var nameThat = {
     var maxFriends = nameThat.settings.maxFriends;
     var subQuery;
     if (nameThat.settings.connections) {
-      subQuery = "SELECT uid2 FROM friend WHERE uid1 = me() LIMIT " + maxFriends;
-    } else {
       subQuery = "SELECT target_id FROM connection WHERE source_id = me() AND target_type='user' LIMIT " + maxFriends;
+    } else {
+      subQuery = "SELECT uid2 FROM friend WHERE uid1 = me() LIMIT " + maxFriends;
     }
     FB.api({
       method: "fql.query",
       query: "SELECT uid, name, pic_big FROM user WHERE uid IN (" + subQuery + ")"
     },
     function(response) {
-      if (response.length == 0) {
+      if (response.length == 0 || response.hasOwnProperty('error_msg')) {
         $("#namethat-loading").hide();
         $("#error-pane").show();
         return;
