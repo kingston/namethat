@@ -22,10 +22,9 @@ var nameThat = {
     // Check if user is already logged in
     FB.getLoginStatus(function(response) {
       $("#fb-loading").hide();
-      if (response.session) {
+      if (response.status === 'connected') {
         nameThat._loggedInHandler(response.session);
-      }
-      else {
+      } else {
         $("#fb-login").show();
         FB.Event.subscribe('auth.login', function(response) {
           nameThat._loggedInHandler(response.session);
