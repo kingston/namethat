@@ -1,4 +1,4 @@
-// File: application.js
+// File: namethat.js
 // Description: Contains the main code for the NameThat application using the
 // Facebook API
 // Author: Kingston Tam
@@ -27,11 +27,11 @@ var nameThat = {
     FB.getLoginStatus(function(response) {
       $("#fb-loading").hide();
       if (response.status === 'connected') {
-        nameThat._loggedInHandler(response.session);
+        nameThat._loggedInHandler(response.authResponse);
       } else {
         $("#fb-login").show();
         FB.Event.subscribe('auth.login', function(response) {
-          nameThat._loggedInHandler(response.session);
+          nameThat._loggedInHandler(response.authResponse);
         });
       }
     });
@@ -92,6 +92,8 @@ var nameThat = {
   * Gets called when the user is logged in
   **/
   _loggedInHandler: function(session) {
+    // Initialize persistent store with new session ID
+    persistentStore.initialize(session.userID);
     $("#fb-login").hide();
     $("#namethat-loading").show(); 
 
