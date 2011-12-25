@@ -36,7 +36,7 @@
 </div>
 <div id="namethat-app" style="display: none">
   <div class="app-instructions">
-    <p>Just type the first name (or full name) of the person in the photo.</p>
+    <p>Just type the first name (or full name) of the person in the photo. <a href="#" id="options-link">(options)</a></p>
   </div>
   <div class="app-score">
     <strong>Your score: </strong><span id="score"></span>
@@ -84,4 +84,12 @@
   <em>Feel free to <a id="feedback-link" href="#">send me</a> any feedback.</em>
   </p>
   <fb:like href="http://namethat.ktam.org/" send="true" width="450" show_faces="true" font="verdana"></fb:like>
+</div>
+<div id="options-panel" title="NameThat Options" style="display: none">
+  <p>
+    Customize the questions that NameThat asks:
+  </p>
+  <label for="friend-list">Friend list: </label>
+  <select id="friend-list"></select>
+  <a href="#" id="list-perms-link" style="display: none">Get Friend Lists</a>
 </div>

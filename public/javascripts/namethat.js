@@ -5,12 +5,16 @@
 
 var nameThat = {
   settings: {
-    maxFriends: 1000, // Maximum friends to load
+    maxFriends: 10, // Maximum friends to load
     maxPhotos: 25, // Maximum number of photos to load per person
     connections: false // Use the connections table?
   },
 
   cachedFriends: null,
+
+  cachedFriendLists: null,
+
+  currentFriendList: null,
 
   challengeData: {},
 
@@ -38,6 +42,21 @@ var nameThat = {
     $("body").keypress(nameThat._textEnterHandler);
     $("#skip-question").click(nameThat.skipQuestion);
     $("#tag-photo").click(nameThat.highlightPhoto);
+    $("#options-link").click(nameThat.showOptionsPanel);
+    $("#list-perms-link").click(nameThat.getFriendListPermissions);
+
+    // Set up options dialog
+    $("#options-panel").dialog({
+      autoOpen: false,
+      height: 300,
+      width: 350,
+      modal: true,
+      open: nameThat.prepareOptionsDialog,
+      buttons: {
+        Cancel: function() { $(this).dialog("close") },
+        "Save Changes": nameThat.saveChangesHandler
+      }
+    });
 
     // Make things pretty
     $("#check-answer").button({ icons: { primary: "ui-icon-check" } });
@@ -49,17 +68,12 @@ var nameThat = {
     $(".action-button").tooltip();
   },
 
-  /**
-  * Gets called when the user is logged in
-  **/
-  _loggedInHandler: function(session) {
-    $("#fb-login").hide();
-    $("#namethat-loading").show(); 
-
-    // Load friends
+  _fetchFriends: function(responseHandler) {
     var maxFriends = nameThat.settings.maxFriends;
     var subQuery;
-    if (nameThat.settings.connections) {
+    if (nameThat.currentFriendList !== null) {
+      subQuery = "SELECT uid FROM friendlist_member WHERE flid = " + nameThat.currentFriendList;
+    } else if (nameThat.settings.connections) {
       subQuery = "SELECT target_id FROM connection WHERE source_id = me() AND target_type='user' LIMIT " + maxFriends;
     } else {
       subQuery = "SELECT uid2 FROM friend WHERE uid1 = me() LIMIT " + maxFriends;
@@ -69,12 +83,24 @@ var nameThat = {
       query: "SELECT uid, name, pic_big FROM user WHERE uid IN (" + subQuery + ")"
     },
     function(response) {
+      nameThat.cachedFriends = response;
+      responseHandler(response);
+    });
+  },
+
+  /**
+  * Gets called when the user is logged in
+  **/
+  _loggedInHandler: function(session) {
+    $("#fb-login").hide();
+    $("#namethat-loading").show(); 
+
+    nameThat._fetchFriends(function(response) {
       if (response.length == 0 || response.hasOwnProperty('error_msg')) {
         $("#namethat-loading").hide();
         $("#error-pane").show();
         return;
       }
-      nameThat.cachedFriends = response;
       $("#namethat-loading").hide();
       $("#namethat-app").show();
       nameThat.startChallenge();
@@ -229,6 +255,96 @@ var nameThat = {
     if (fade) {
       $("#status").delay(1200).animate({opacity: 0}, 500);
     }
+  },
+
+  /**
+   * Populates the friend list data in the select box
+   */
+  _populateFriendList: function(response) {
+    nameThat.cachedFriendLists = response;
+    $("#friend-list option").remove();
+    option = $("<option></option>").val("none").text("(all)");
+    if (nameThat.currentFriendList === null) {
+      option.attr('selected', 'selected');
+    }
+    $("#friend-list").append(option);
+    for (var i = 0; i < response.length; i++) {
+      friendList = response[i];
+      option = $("<option></option>").val(friendList.flid).text(friendList.name)
+      if (friendList.flid === nameThat.currentFriendList) {
+        option.attr('selected', 'selected');
+      }
+      $("#friend-list").append(option);
+    }
+  },
+
+  /**
+   * Prepares the data in the options panel
+   */
+  prepareOptionsDialog: function() {
+    if (nameThat.cachedFriendLists === null) {
+      FB.api({
+        method: "fql.query",
+        query: "SELECT flid, name FROM friendlist WHERE owner=me()"},
+        nameThat._populateFriendList
+      );
+      // Fire a simulataneous query to see if we have permission
+      FB.api("/me/permissions", function(response) {
+        permissions = response.data[0];
+        if (!permissions.hasOwnProperty("read_friendlists")) {
+          $("#friend-list").hide();
+          $("#list-perms-link").show();
+        }
+      });
+    } else {
+      nameThat._populateFriendList(nameThat.cachedFriendLists);
+    }
+  },
+
+  /**
+   * Handles when the user wants to authorize friend lists
+   */
+  getFriendListPermissions: function() {
+    FB.login(function(response) {
+      if (response.authResponse) {
+        $('#list-perms-link').hide();
+        $('#friend-list').show();
+        // A little bit of repeat code (REFACTOR)
+        FB.api({
+          method: "fql.query",
+          query: "SELECT flid, name FROM friendlist WHERE owner=me()"},
+          nameThat._populateFriendList
+        );
+      }
+    }, {scope: 'read_friendlists'});
+  },
+
+  /**
+   * Shows the options panel to the user
+   */
+  showOptionsPanel: function() {
+    $("#options-panel").dialog("open");
+    return false;
+  },
+
+  /**
+   * Handles when save changes is pressed on the options panel
+   */
+  saveChangesHandler: function() {
+    // do stuff
+    var oldFriendList = nameThat.currentFriendList;
+    var newFriendList = $("#friend-list option:selected").val();
+    newFriendList = newFriendList === "none" ? null : newFriendList;
+    if (oldFriendList !== newFriendList) {
+      if (!confirm("Changing the friend list will reset the challenge.  Continue?")) {
+        return;
+      }
+      nameThat.currentFriendList = newFriendList;
+      nameThat._fetchFriends(function(response) {
+        nameThat.startChallenge();
+      });
+    }
+    $(this).dialog("close");
   },
 
   /**
