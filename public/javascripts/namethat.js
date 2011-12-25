@@ -5,7 +5,7 @@
 
 var nameThat = {
   settings: {
-    maxFriends: 10, // Maximum friends to load
+    maxFriends: 1000, // Maximum friends to load
     maxPhotos: 25, // Maximum number of photos to load per person
     connections: false // Use the connections table?
   },
@@ -72,7 +72,7 @@ var nameThat = {
     var maxFriends = nameThat.settings.maxFriends;
     var subQuery;
     if (nameThat.currentFriendList !== null) {
-      subQuery = "SELECT uid FROM friendlist_member WHERE flid = " + nameThat.currentFriendList;
+      subQuery = "SELECT uid FROM friendlist_member WHERE flid = " + nameThat.currentFriendList + " LIMIT " + maxFriends;
     } else if (nameThat.settings.connections) {
       subQuery = "SELECT target_id FROM connection WHERE source_id = me() AND target_type='user' LIMIT " + maxFriends;
     } else {
