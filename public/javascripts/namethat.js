@@ -108,7 +108,7 @@ var nameThat = {
       $("#namethat-app").show();
       var oldChallenge = persistentStore.getValue("challenge");
       // Check whether we have an old challenge that's worth restoring
-      if (oldChallenge && oldChallenge.totalAnswers > 5) {
+      if (oldChallenge && oldChallenge.curFriend &&  oldChallenge.totalAnswers > 5) {
         nameThat.challengeData = oldChallenge;
         $("#old-challenge-prompt").show();
         nameThat.showQuestion();
@@ -187,9 +187,22 @@ var nameThat = {
    */
   advanceQuestion: function() {
     var data = nameThat.challengeData;
-    
+
+    // Hide the old challenge prompt if shown
+    $("#old-challenge-prompt").hide();
+
     if (data.marathonMode) {
-      data.curFriendIdx = Math.floor(Math.random() * (data.friends.length + 1));
+      if (data.friends.length === 0) {
+        nameThat.showStatus("You finished!  Nice :) We're taking a break ;)", "correct", false);
+        nameThat.showScore();
+        // Disable everything
+        $(".action-button").button("option", "disabled", true);
+        $("#answer").val("");
+        // Clear the persisted challenge
+        persistentStore.setValue("challenge", null);
+        return;
+      }
+      data.curFriendIdx = Math.floor(Math.random() * (data.friends.length));
       data.curFriend = data.friends[data.curFriendIdx]
     } else {
       data.curFriendIdx = (data.curFriendIdx + 1) % data.friends.length;
@@ -197,10 +210,23 @@ var nameThat = {
     }
     // Store our current state in case of refresh
     persistentStore.setValue("challenge", data);
-    // Hide the old challenge prompt if shown
-    $("#old-challenge-prompt").hide();
     // Show the question
     nameThat.showQuestion();
+  },
+
+  /**
+   * Shows the current score
+   */
+  showScore: function() {
+    var data = nameThat.challengeData;
+    // Update score
+    var percent = Math.round((data.correctAnswers / data.totalAnswers) * 100);
+    if (data.totalAnswers === 0) percent = 100;
+    var scoreStr = data.correctAnswers + " out of " + data.totalAnswers + " (" + percent + "%)";
+    if (data.marathonMode) {
+      scoreStr += " - " + data.friends.length + " remaining";
+    }
+    $("#score").html(scoreStr);
   },
 
   /**
@@ -216,17 +242,7 @@ var nameThat = {
     $("#answer").val("");
     $("#circle-image").stop(true, true).hide();
 
-    // Update score
-    if (data.marathonMode) {
-      var percent = Math.round((data.correctAnswers / data.totalAnswers) * 100);
-      if (data.totalAnswers === 0) percent = 100;
-      remaining = data.friends.length;
-      $("#score").html(data.correctAnswers + " out of " + data.totalAnswers + " (" + percent + "%) - " + remaining + " remaining");
-    } else {
-      var percent = Math.round((data.correctAnswers / data.totalAnswers) * 100);
-      if (data.totalAnswers === 0) percent = 100;
-      $("#score").html(data.correctAnswers + " out of " + data.totalAnswers + " (" + percent + "%)");
-    }
+    nameThat.showScore();
 
     $("#answer").focus();
   },
@@ -285,6 +301,10 @@ var nameThat = {
     if (correct) {
       nameThat.challengeData.correctAnswers++;
       nameThat.showStatus("Correct! That person was " + name + ".", "correct", true);
+      // If we're in marathon mode, remove the correct answer from our data
+      if (nameThat.challengeData.marathonMode) {
+        nameThat.challengeData.friends.splice(nameThat.challengeData.curFriendIdx, 1);
+      }
     } else {
       nameThat.showStatus("Sorry!  That person was " + name + ".", "wrong", false);
     }
