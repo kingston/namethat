@@ -1,5 +1,6 @@
 class PublicController < ApplicationController
   def index
+    @show_meta = true
   end
 
   def about

@@ -1,7 +1,15 @@
-<!DOCTYPE html xmlns:fb="https://www.facebook.com/2008/fbml">
-<html>
+<!DOCTYPE html>
+<html xmlns:og="http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
   <head>
     <title>NameThat</title>
+    <% if @show_meta %>
+      <meta property="og:title" content="NameThat" />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="http://namethat.ktam.org/" />
+      <meta property="og:image" content="http://namethat.ktam.org/images/logo.png?v=2" />
+      <meta property="og:description" content="A small side project to test how many of your Facebook friends' names you can remember (and hopefully improve on ;p)" />
+      <meta property="fb:app_id" content="175011062558504" />
+    <% end %>
     <%= stylesheet_link_tag 'screen.css', :media => 'screen, projection' %>
     <%= stylesheet_link_tag 'print.css', :media => 'print' %>
     <!--[if IE]><%= stylesheet_link_tag 'ie.css', :media => 'screen, projection' %><![endif]-->
