@@ -44,6 +44,7 @@ var nameThat = {
     $("#tag-photo").click(nameThat.highlightPhoto);
     $("#options-link").click(nameThat.showOptionsPanel);
     $("#list-perms-link").click(nameThat.getFriendListPermissions);
+    $(".start-challenge-link").click(nameThat.startChallenge);
 
     // Set up options dialog
     $("#options-panel").dialog({
@@ -105,7 +106,15 @@ var nameThat = {
       }
       $("#namethat-loading").hide();
       $("#namethat-app").show();
-      nameThat.startChallenge();
+      var oldChallenge = persistentStore.getValue("challenge");
+      // Check whether we have an old challenge that's worth restoring
+      if (oldChallenge && oldChallenge.totalAnswers > 5) {
+        nameThat.challengeData = oldChallenge;
+        $("#old-challenge-prompt").show();
+        nameThat.showQuestion();
+      } else {
+        nameThat.startChallenge();
+      }
     });
   },
 
@@ -114,7 +123,6 @@ var nameThat = {
   **/
   _textEnterHandler: function(e) {
     code = (e.keyCode ? e.keyCode : e.which);
-    var preventDefault = true;
     switch (code) {
       case 33: // !
       case 49: // 1 
@@ -135,11 +143,13 @@ var nameThat = {
         nameThat.checkAnswer();
         e.preventDefault();
         break;
-      default:
-        preventDefault = false;
-    }
-    if (preventDefault) {
-      e.preventDefault();
+      case 42: // *
+        if (confirm("Starting marathon... Reset current challenge?")) {
+          nameThat.startMarathon();
+          nameThat.showStatus("Marathon started! Enjoy ;)", "info", false);
+        }
+        e.preventDefault();
+        break;
     }
   },
 
@@ -149,21 +159,56 @@ var nameThat = {
   startChallenge: function() {
     nameThat.challengeData = {
       friends: utils.shuffle(nameThat.cachedFriends),
-      curFriendId: 0,
+      curFriendIdx: 0,
       correctAnswers: 0,
-      totalAnswers: 0
+      totalAnswers: 0,
+      marathonMode: false
     };
+    nameThat.advanceQuestion();
+  },
+
+  /**
+   * Starts the NameThat marathon
+   */
+  startMarathon: function() {
+    // [REFACTOR] Turn challenge data into an object with methods to get next
+    // question, etc.
+    nameThat.challengeData = {
+      friends: nameThat.cachedFriends,
+      correctAnswers: 0,
+      totalAnswers: 0,
+      marathonMode: true
+    };
+    nameThat.advanceQuestion();
+  },
+
+  /**
+   * Advances to the next question
+   */
+  advanceQuestion: function() {
+    var data = nameThat.challengeData;
+    
+    if (data.marathonMode) {
+      data.curFriendIdx = Math.floor(Math.random() * (data.friends.length + 1));
+      data.curFriend = data.friends[data.curFriendIdx]
+    } else {
+      data.curFriendIdx = (data.curFriendIdx + 1) % data.friends.length;
+      data.curFriend = data.friends[data.curFriendIdx];
+    }
+    // Store our current state in case of refresh
+    persistentStore.setValue("challenge", data);
+    // Hide the old challenge prompt if shown
+    $("#old-challenge-prompt").hide();
+    // Show the question
     nameThat.showQuestion();
   },
 
   /**
-   * Shows a new question
+   * Shows the question for the current friend
    **/
   showQuestion: function() {
     var data = nameThat.challengeData;
-    
-    data.curFriendId = (data.curFriendId + 1) % data.friends.length;
-    data.curFriend = data.friends[data.curFriendId];
+
     data.curFriend.curPhotoIdx = -1;
 
     $("#friend-photo").attr("src", $("#loading-image").attr("src"));
@@ -172,9 +217,16 @@ var nameThat = {
     $("#circle-image").stop(true, true).hide();
 
     // Update score
-    var percent = Math.round((data.correctAnswers / data.totalAnswers) * 100);
-    if (data.totalAnswers === 0) percent = 100;
-    $("#score").html(data.correctAnswers + " out of " + data.totalAnswers + " (" + percent + "%)");
+    if (data.marathonMode) {
+      var percent = Math.round((data.correctAnswers / data.totalAnswers) * 100);
+      if (data.totalAnswers === 0) percent = 100;
+      remaining = data.friends.length;
+      $("#score").html(data.correctAnswers + " out of " + data.totalAnswers + " (" + percent + "%) - " + remaining + " remaining");
+    } else {
+      var percent = Math.round((data.correctAnswers / data.totalAnswers) * 100);
+      if (data.totalAnswers === 0) percent = 100;
+      $("#score").html(data.correctAnswers + " out of " + data.totalAnswers + " (" + percent + "%)");
+    }
 
     $("#answer").focus();
   },
@@ -237,7 +289,7 @@ var nameThat = {
       nameThat.showStatus("Sorry!  That person was " + name + ".", "wrong", false);
     }
     nameThat.challengeData.totalAnswers++;
-    nameThat.showQuestion();
+    nameThat.advanceQuestion();
   },
 
   /**
@@ -245,7 +297,7 @@ var nameThat = {
    **/
   skipQuestion: function() {
     nameThat.showStatus("Question skipped... btw, that was " + nameThat.challengeData.curFriend.name + ".", "info", true);
-    nameThat.showQuestion();
+    nameThat.advanceQuestion();
   },
 
   /**

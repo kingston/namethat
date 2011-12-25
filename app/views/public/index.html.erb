@@ -3,9 +3,11 @@
   <p>Hi there, we're loading the Facebook interface now.  Please give us a sec while it loads.</p>
   <p><em>(If nothing happens, try reloading or just come back another time - the site might be down)</em></p>
 </div>
+
 <div id="error-pane" style="display: none">
   <p>Sorry, we encountered a bug loading your data.  Please try again and if that doesn't work, try again another time. :(</p>
 </div>
+
 <div id="fb-root"></div>
 <script type="text/javascript">
   window.fbAsyncInit = function() {
@@ -23,6 +25,7 @@
     document.getElementById('fb-root').appendChild(e);
   }());
 </script>
+
 <div id="fb-login" style="display: none;">
 <p><em>Dedicated to people who just can't remember names</em></p>
 <p>Hi there!  This is just a quick side project I made to test how many of my Facebook friends' names I can remember (and hopefully improve a bit ;p).</p>
@@ -37,6 +40,9 @@
 <div id="namethat-app" style="display: none">
   <div class="app-instructions">
     <p>Just type the first name (or full name) of the person in the photo. <a href="#" id="options-link">(options)</a></p>
+  </div>
+  <div id="old-challenge-prompt" style="display: none;">
+    Resuming your old challenge.  <a href="#" class="start-challenge-link">Start new challenge?</a>
   </div>
   <div class="app-score">
     <strong>Your score: </strong><span id="score"></span>
@@ -85,6 +91,7 @@
   </p>
   <fb:like href="http://namethat.ktam.org/" send="true" width="450" show_faces="true" font="verdana"></fb:like>
 </div>
+
 <div id="options-panel" title="NameThat Options" style="display: none">
   <p>
     Customize the questions that NameThat asks:

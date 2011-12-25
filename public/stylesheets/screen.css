@@ -633,7 +633,7 @@ body {
   width: 250px;
 }
 /* line 112, ../../app/stylesheets/screen.scss */
-#namethat-app .app-links, #namethat-app .app-input, #namethat-app .app-status {
+#namethat-app .app-links, #namethat-app .app-input, #namethat-app .app-status, #namethat-app #old-challenge-prompt {
   margin: 10px 0;
 }
 /* line 116, ../../app/stylesheets/screen.scss */
@@ -669,13 +669,18 @@ body {
   background-color: #ED5;
 }
 /* line 148, ../../app/stylesheets/screen.scss */
+#namethat-app #old-challenge-prompt {
+  margin: 10;
+  font-style: italic;
+}
+/* line 153, ../../app/stylesheets/screen.scss */
 #namethat-app #circle-image {
   display: none;
   position: absolute;
   width: 100px;
 }
 
-/* line 155, ../../app/stylesheets/screen.scss */
+/* line 160, ../../app/stylesheets/screen.scss */
 .tooltip {
   display: none;
   background: transparent url(/images/black_arrow.png);

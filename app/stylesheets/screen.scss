@@ -109,7 +109,7 @@ body {
     width: 250px;
   }
 
-  .app-links, .app-input, .app-status {
+  .app-links, .app-input, .app-status, #old-challenge-prompt {
     margin: 10px 0;
   }
 
@@ -143,6 +143,11 @@ body {
     .info {
       background-color: #ED5;
     }
+  }
+
+  #old-challenge-prompt {
+    margin: 10;
+    font-style: italic;
   }
 
   #circle-image {

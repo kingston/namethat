@@ -9,7 +9,7 @@ var persistentStore = {
   data: null,
 
   defaults: {
-    
+    challenge: null,
   },
   
   initialize: function(profileId) {
@@ -34,7 +34,7 @@ var persistentStore = {
 
   setValue: function(key, value) {
     this.data[key] = value;
-    if (persistentStoreEnabled) {
+    if (this.persistentStoreEnabled) {
       localStorage.setItem(this.localStorageKey, $.toJSON(this.data));
     }
   },
