@@ -446,8 +446,8 @@ var nameThat = {
         var circle = $("#circle-image");
         var friendPhoto = $("#friend-photo");
         var pos = friendPhoto.position();
-        var newtop = pos.top + obj.ycoord / 100.0 * friendPhoto.height() - 50;
-        var newleft = pos.left + obj.xcoord / 100.0 * friendPhoto.width() - 50;
+        var newtop = pos.top + parseInt(friendPhoto.css('marginTop')) + obj.ycoord / 100.0 * friendPhoto.height() - 50;
+        var newleft = pos.left + parseInt(friendPhoto.css('marginLeft')) + obj.xcoord / 100.0 * friendPhoto.width() - 50;
         circle.css({ top: newtop, left: newleft });
         circle.stop(true, true).show().delay(1000).fadeOut(500);
       }
